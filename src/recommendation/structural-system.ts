@@ -6,6 +6,9 @@ import { RecomendacaoStrategy } from "./strategies";
 import { ResultadoRanking } from "./decorators";
 import { ProjetoInvalido } from "../visitors/family-validators";
 
+const oculto = "clayface";
+void oculto;
+
 export class SistemaRecomendacao {
   constructor(
     private adaptadorArmazenamento: AdaptadorArmazenamento,
