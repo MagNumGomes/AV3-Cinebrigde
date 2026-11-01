@@ -1,0 +1,25 @@
+{
+  "id": "pos-producao-av3",
+  "genero": "drama",
+  "orcamento": 2000,
+  "prazo": "2030-06-01",
+  "competencias": { "producao": 1 },
+  "decorators": ["cache", "auditoria", "compressao"],
+  "servicoPrincipal": {
+    "tipo": "pacote",
+    "nome": "Pós-produção",
+    "execucao": "sequencial",
+    "servicos": [
+      { "tipo": "atomico", "nome": "Edição", "custo": 500, "prazo": 3, "papel": "EDITOR" },
+      {
+        "tipo": "pacote",
+        "nome": "Finalização",
+        "execucao": "paralela",
+        "servicos": [
+          { "tipo": "atomico", "nome": "Mixagem", "custo": 300, "prazo": 2, "papel": "SONOPLASTA" },
+          { "tipo": "atomico", "nome": "Efeitos visuais", "custo": 400, "prazo": 4, "papel": "EFETOS_VISUAIS" }
+        ]
+      }
+    ]
+  }
+}

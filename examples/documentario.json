@@ -1,0 +1,11 @@
+{
+  "tipo": "documentario",
+  "genero": "documentario",
+  "duracao": 60,
+  "orcamento": 10000,
+  "prazo": "2030-06-01",
+  "papeisObrigatorios": ["DIRETOR", "DIRETOR_FOTOGRAFIA", "SONOPLASTA", "EDITOR"],
+  "tema": "Memória do cinema independente",
+  "entrevistados": ["Ana", "João"],
+  "restricoes": { "diasProducao": 5 }
+}

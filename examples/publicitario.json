@@ -1,0 +1,11 @@
+{
+  "tipo": "publicitario",
+  "genero": "publicitario",
+  "duracao": 0.5,
+  "orcamento": 5000,
+  "prazo": "2030-06-01",
+  "papeisObrigatorios": ["DIRETOR", "ROTEIRISTA", "EDITOR"],
+  "cliente": "Estúdio de demonstração",
+  "canais": ["digital", "tv"],
+  "restricoes": { "diasProducao": 2 }
+}

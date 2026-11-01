@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Papel {
+  DIRETOR
+  DIRETOR_FOTOGRAFIA
+  SONOPLASTA
+  EDITOR
+  ROTEIRISTA
+  EFETOS_VISUAIS
+}
+
+enum StatusConvite {
+  PENDENTE
+  ACEITO
+  RECUSADO
+}
+
+model Projeto {
+  id                 String            @id @default(cuid())
+  genero             String
+  tipo               String            @default("padrao")
+  duracao            Float             @default(1)
+  restricoes         Json              @default("{}")
+  dadosEspecificos   Json              @default("{}")
+  orcamento          Float
+  prazo              DateTime
+  papeisObrigatorios Papel[]
+  competencias       Json              @default("[]")
+  recomendacoes      Recomendacao[]
+  convites           Convite[]
+  equipe             Equipe?
+  criadoEm           DateTime           @default(now())
+  atualizadoEm       DateTime           @updatedAt
+}
+
+model Profissional {
+  id             String          @id @default(cuid())
+  nome           String
+  email          String          @unique
+  papeis         Papel[]
+  generos        String[]
+  competencias   Competencia[]
+  avaliacoes     Avaliacao[]
+  valorDiaria    Float
+  disponivelAte  DateTime?
+  recomendacoes  Recomendacao[]
+  convites       Convite[]
+  membrosEquipe  MembroEquipe[]
+  criadoEm       DateTime         @default(now())
+}
+
+model Competencia {
+  id              String        @id @default(cuid())
+  nome            String
+  peso            Float         @default(1)
+  profissionalId  String
+  profissional    Profissional  @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+
+  @@unique([nome, profissionalId])
+}
+
+model Avaliacao {
+  id              String        @id @default(cuid())
+  nota            Float
+  comentario      String?
+  generoProjeto   String
+  profissionalId  String
+  profissional    Profissional  @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+  criadoEm        DateTime      @default(now())
+}
+
+model Recomendacao {
+  id               String        @id @default(cuid())
+  papel            Papel
+  pontuacao        Float
+  motivo           String
+  projetoId        String
+  projeto          Projeto       @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+  profissionalId  String
+  profissional    Profissional  @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+  criadaEm         DateTime      @default(now())
+}
+
+model Convite {
+  id               String         @id @default(cuid())
+  status           StatusConvite  @default(PENDENTE)
+  profissionalId   String
+  profissional     Profissional   @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+  projetoId        String
+  projeto          Projeto        @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+  criadoEm         DateTime       @default(now())
+  atualizadoEm     DateTime       @updatedAt
+}
+
+model Equipe {
+  id          String         @id @default(cuid())
+  projetoId   String         @unique
+  projeto     Projeto        @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+  membros     MembroEquipe[]
+  criadaEm    DateTime       @default(now())
+}
+
+model MembroEquipe {
+  id               String        @id @default(cuid())
+  papel            Papel
+  equipeId         String
+  equipe           Equipe        @relation(fields: [equipeId], references: [id], onDelete: Cascade)
+  profissionalId  String
+  profissional    Profissional  @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+
+  @@unique([equipeId, papel])
+  @@unique([equipeId, profissionalId])
+}

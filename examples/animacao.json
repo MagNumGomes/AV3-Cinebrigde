@@ -1,0 +1,11 @@
+{
+  "tipo": "animacao",
+  "genero": "animacao",
+  "duracao": 10,
+  "orcamento": 10000,
+  "prazo": "2030-06-01",
+  "papeisObrigatorios": ["DIRETOR", "ROTEIRISTA", "EFETOS_VISUAIS", "EDITOR"],
+  "software": "Blender",
+  "quadrosPorSegundo": 24,
+  "restricoes": { "diasProducao": 5 }
+}
